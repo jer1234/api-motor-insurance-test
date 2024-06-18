@@ -1,73 +1,87 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Motor Insurance API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is a NestJS API for a for Zurich  that provides pricing queries and administrative functionalities for products and prices. The API connects to a PostgreSQL database and uses role-based access control to secure certain endpoints.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- Get product pricing based on product code and location
+- Admin functionalities to create, update, and delete products
+- Role-based access control for admin endpoints
+- Swagger documentation for API endpoints
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Prerequisites
 
-## Installation
+- Node.js and npm
+- PostgreSQL
+
+## Getting Started
+
+### Clone the Repository
 
 ```bash
-$ npm install
+git clone https://github.com/yourusername/api-motor-insurance-test.git
+cd api-motor-insurance-test
+npm install
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+Create a .env file in the root directory :
+```
+# PostgreSQL Database Configuration
+DB_HOST=localhost
+DB_PORT=your_server_port
+DB_USERNAME=your_db_username
+DB_PASSWORD=your_db_password
+DB_DATABASE=MOTOR_INSURANCE_WEBSITE
+```
+Run the Application
+```
+npm run start
 ```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+## API Documentation
+Swagger documentation is available at http://localhost:3000/api.
 
-# e2e tests
-$ npm run test:e2e
+# Endpoints:
+- GET /product - Get product pricing based on product code and location (accessible by all users)
+- POST /product - Create a new product (admin access only)
+- PUT /product - Update an existing product (admin access only)
+- DELETE /product - Delete a product (admin access only)
 
-# test coverage
-$ npm run test:cov
+# Usage
+Example Requests:
+
+Get Product
+```
+curl --location --request GET 'http://localhost:3000/product?productCode=1000&location=West%20Malaysia'
 ```
 
-## Support
+Create a Product
+```
+curl --location --request POST 'http://localhost:3000/product' \
+--header 'Content-Type: application/json' \
+--header 'user-role: admin' \
+--data-raw '{
+    "productCode": "3000",
+    "description": "Hatchback",
+    "location": "West Malaysia",
+    "price": 200
+}'
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Update Product
+```
+curl --location --request PUT 'http://localhost:3000/product?productCode=1000' \
+--header 'Content-Type: application/json' \
+--header 'user-role: admin' \
+--data-raw '{
+    "location": "West Malaysia",
+    "price": 350
+}'
+```
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Delete Product
+```
+curl --location --request DELETE 'http://localhost:3000/product?productCode=3000' \
+--header 'user-role: admin'
+```
