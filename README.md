@@ -1,6 +1,6 @@
 # Motor Insurance API
 
-This is a NestJS API for a for Zurich  that provides pricing queries and administrative functionalities for products and prices. The API connects to a PostgreSQL database and uses role-based access control to secure certain endpoints.
+This is a NestJS API for Zurich  that provides pricing queries and administrative functionalities for products and prices. The API connects to a PostgreSQL database and uses role-based access control to secure certain endpoints.
 
 ## Features
 
