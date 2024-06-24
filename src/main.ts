@@ -9,7 +9,10 @@ async function bootstrap() {
     .setTitle('Motor Insurance API')
     .setDescription('API for managing product prices')
     .setVersion('1.0')
-    .addBearerAuth()
+    .addGlobalParameters({
+      name: 'user-role',
+      in: 'header',
+    })
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
